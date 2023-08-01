@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathso-lab3</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="top">
+        <h1>Mathso, David Rucal</h1>
+    </div>
+
+    <div class="container">
+        <div class="calculadora">
+            <div class="title">
+                <h1>Calculadora</h1>
+            </div>
+            <form id="calculator">
+                <label for="operation">Calculos aritmeticos:</label>
+                <p>La calculadora funciona de la siguiente manera, el usuario debe ingresar el dato principal en la entrada 1 y el que lo complementa en la entrada 2, por ejemplo si se desea sacar la raiz de 9 se debe colocar 9 en la entrada 1 y 2 en la entrada 2.</p>
+                <select id="operation">
+                    <option value="power">Potencia</option>
+                    <option value="root">Raíz</option>
+                </select><br><br>
+
+                <label for="input1">Entrada 1:</label>
+                <input type="number" class="input1"><br><br>
+
+                <label for="input2">Entrada 2:</label>
+                <input type="number" class="input2"><br><br>
+
+                <input type="submit" value="Calcular">
+            </form>
+
+            <p><span id="resultori"></span></p>
+        </div>
+
+        <div class="area-calculator">
+            <h1>Calculadora de Áreas</h1>
+            <p>Selecciona una figura y proporciona las dimensiones para calcular su área:</p>
+            <select id="figure">
+                <option value="square">Cuadrado</option>
+                <option value="rectangle">Rectángulo</option>
+                <option value="triangle">Triángulo</option>
+                <option value="circle">Círculo</option>
+            </select><br><br>
+
+            <div id="inputFields">
+                <label for="side">Lado:</label>
+                <input type="number" id="side" class="side" required>
+            </div>
+
+            <button onclick="calculateArea()">Calcular Área</button>
+            <p id="resultArea"></p>
+            <p id="resultCalc"></p>
+        </div>
+
+        <div class="length-converter">
+            <h1>Conversor de Longitud</h1>
+            <label for="unit">Selecciona la unidad de medida:</label>
+            <select id="unit">
+                <option value="m">Metros (Internacional)</option>
+                <option value="ft">Pies (Inglés)</option>
+                <option value="cm">Centímetros (Cegesimal)</option>
+            </select><br><br>
+
+            <label for="inputValue">Ingresa el valor:</label>
+            <input type="number" id="inputValue" step="0.01"><br><br>
+
+            <button onclick="convertLength()">Convertir Longitud</button>
+
+            <p>Resultado en Metros: <span id="resultMeters"></span></p>
+            <p>Resultado en Pies: <span id="resultFeet"></span></p>
+            <p>Resultado en Centímetros: <span id="resultCentimeters"></span></p>
+        </div>
+
+        <div class="density-calculator">
+            <h1>Calculadora de Densidad</h1>
+            <label for="mass">Masa del objeto (en gramos):</label>
+            <input type="number" id="mass" step="0.01"><br><br>
+
+            <label for="volume">Volumen del objeto (en centímetros cúbicos):</label>
+            <input type="number" id="volume" step="0.01"><br><br>
+
+            <button onclick="calculateDensity()">Calcular Densidad</button>
+
+            <p>La densidad del objeto es: <span id="resultDensity"></span> gramos por centímetro cúbico (g/cm³)</p>
+        </div>
+
+        <div class="unit-converter">
+            <h1>Conversor de unidad</h1>
+            <p>Ingresa el valor e ingresa las unidades.</p>
+            <input type="number" id="inputValue">
+            <select id="inputUnit">
+                <option value="bit">Bit</option>
+                <option value="byte">Byte</option>
+                <option value="kb">Kilobyte</option>
+                <option value="mb">Megabyte</option>
+                <option value="gb">Gigabyte</option>
+                <option value="tb">Terabyte</option>
+            </select>
+            <br><br>
+            <p>Selecciona las unidades a converir.</p>
+            <select id="outputUnit">
+                <option value="bit">Bit</option>
+                <option value="byte">Byte</option>
+                <option value="kb">Kilobyte</option>
+                <option value="mb">Megabyte</option>
+                <option value="gb">Gigabyte</option>
+                <option value="tb">Terabyte</option>
+            </select>
+            <br><br>
+            <button onclick="convertStorage()">Convert</button>
+            <p id="output"></p>
+        </div>
+    </div>
+
+
+   
+
+   
+    <script>
+        document.getElementById("calculator").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var operation = document.getElementById("operation").value;
+            var input1 = parseFloat(document.querySelector(".input1").value);
+            var input2 = parseFloat(document.querySelector(".input2").value);
+            var result;
+
+            switch (operation) {
+                case "power":
+                    result = Math.pow(input1, input2);
+                    document.getElementById("resultori").textContent = "Resultado cálculo aritmético: " + result;
+                    break;
+                case "root":
+                    result = Math.pow(input1, 1 / input2);
+                    document.getElementById("resultori").textContent = "Resultado cálculo aritmético: " + result;
+                    break;
+                default:
+                    document.getElementById("resultori").textContent = "Operación no válida";
+            }
+        });
+
+        function calculateArea() {
+            var figure = document.getElementById("figure").value;
+            var side = parseFloat(document.getElementById("side").value);
+            var area;
+
+            switch (figure) {
+                case "square":
+                    area = side * side;
+                    break;
+                case "rectangle":
+                    var length = parseFloat(prompt("Ingresa la longitud:"));
+                    area = side * length;
+                    break;
+                case "triangle":
+                    var height = parseFloat(prompt("Ingresa la altura:"));
+                    area = 0.5 * side * height;
+                    break;
+                case "circle":
+                    area = Math.PI * side * side;
+                    break;
+                default:
+                    area = "Figura no válida";
+            }
+
+            document.getElementById("resultArea").textContent = "Área: " + area;
+        }
+
+        function convertLength() {
+            var selectedUnit = document.getElementById("unit").value;
+            var inputValue = parseFloat(document.getElementById("inputValue").value);
+
+            if (isNaN(inputValue)) {
+                alert("Por favor, ingresa un valor numérico válido.");
+                return;
+            }
+
+            var resultMeters;
+            var resultFeet;
+            var resultCentimeters;
+
+            switch (selectedUnit) {
+                case "m":
+                    resultMeters = inputValue;
+                    resultFeet = inputValue * 3.28084;
+                    resultCentimeters = inputValue * 100;
+                    break;
+                case "ft":
+                    resultMeters = inputValue / 3.28084;
+                    resultFeet = inputValue;
+                    resultCentimeters = inputValue / 0.0328084;
+                    break;
+                case "cm":
+                    resultMeters = inputValue / 100;
+                    resultFeet = inputValue * 0.0328084;
+                    resultCentimeters = inputValue;
+                    break;
+                default:
+                    alert("Unidad de medida no válida.");
+                    return;
+            }
+
+            document.getElementById("resultMeters").textContent = "" + resultMeters.toFixed(2);
+            document.getElementById("resultFeet").textContent = "" + resultFeet.toFixed(2);
+            document.getElementById("resultCentimeters").textContent = "" + resultCentimeters.toFixed(2);
+        }
+
+        function calculateDensity() {
+            var mass = parseFloat(document.getElementById("mass").value);
+            var volume = parseFloat(document.getElementById("volume").value);
+
+            if (isNaN(mass) || isNaN(volume)) {
+                alert("Por favor, ingresa valores numéricos válidos para la masa y el volumen.");
+                return;
+            }
+
+            if (volume <= 0) {
+                alert("El volumen debe ser mayor que cero.");
+                return;
+            }
+
+            var density = mass / volume;
+
+            document.getElementById("resultDensity").textContent = "" + density.toFixed(2) + "";
+        }
+
+        function convertStorage() {
+            var inputValue = parseFloat(document.getElementById("inputValue").value);
+            var inputUnit = document.getElementById("inputUnit").value;
+            var outputUnit = document.getElementById("outputUnit").value;
+            var outputValue;
+
+            if (isNaN(inputValue)) {
+                alert("Por favor, ingresa un valor numérico válido.");
+                return;
+            }
+
+            switch (inputUnit) {
+                case "bit":
+                    inputValue /= 8;
+                    break;
+                case "kb":
+                    inputValue *= 1000;
+                    break;
+                case "mb":
+                    inputValue *= 1000000;
+                    break;
+                case "gb":
+                    inputValue *= 1000000000;
+                    break;
+                case "tb":
+                    inputValue *= 1000000000000;
+                    break;
+                // If inputUnit is "byte" or "tb", no changes are needed.
+            }
+
+            switch (outputUnit) {
+                case "bit":
+                    outputValue = inputValue * 8;
+                    break;
+                case "kb":
+                    outputValue = inputValue / 1000;
+                    break;
+                case "mb":
+                    outputValue = inputValue / 1000000;
+                    break;
+                case "gb":
+                    outputValue = inputValue / 1000000000;
+                    break;
+                case "tb":
+                    outputValue = inputValue / 1000000000000;
+                    break;
+                // If outputUnit is "byte" or "tb", no changes are needed.
+            }
+
+            document.getElementById("output").textContent = "Output: " + outputValue.toFixed(2) + " " + outputUnit;
+        }
+    </script>
+</body>
+</html>
